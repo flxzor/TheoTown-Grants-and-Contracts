@@ -10,6 +10,8 @@ This plugin introduces various structured monetary contracts and grants offered 
 
 ## Planned features
 - Additional requirement and goal types
+- Contracts menu and controls hotkeys
+- Failsafe checks for incorrectly implemented contract drafts
 
 ## Changelog
 A list of major changes to the public version will be kept up to date here.

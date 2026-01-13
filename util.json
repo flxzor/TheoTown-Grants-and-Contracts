@@ -18,6 +18,12 @@
     "volume": 1.2
   },
   {
+    "id": "$contracts_sound_complete_00",
+    "type": "sound",
+    "file": "contract_complete.mp3",
+    "volume": 1
+  },
+  {
     "id": "$contract_expandededucation_00",
     "type": "data",
     "index": true,

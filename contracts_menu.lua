@@ -125,6 +125,7 @@ end
 
 -- Will be called after contract completion.
 local function completeContract(contract)
+    TheoTown.playSound('$contracts_sound_complete_00')
     City.earnMoney(contract['completion'])
     table.remove(storage.activeContracts, Array(storage.activeContracts):find(contract['contract id']))
     table.insert(storage.completedContracts, contract['contract id'])
@@ -213,11 +214,11 @@ local function generateGoals(contract)
 
     -- 'Reach x income' goal type.
     if goals['income'] ~= nil then
-        local current = TheoTown.formatMoney(City.getIncome())
-        local target = TheoTown.formatMoney(goals['income'])
+        local current = City.getIncome()
+        local target = goals['income']
 
         if current < target then text = text..'[✗] ' else text = text..'[✓] ' end
-        text = text..string.format(TheoTown.translate('$contracts_string_condition_income'), current, target)
+        text = text..string.format(TheoTown.translate('$contracts_string_condition_income'), TheoTown.formatMoney(current), TheoTown.formatMoney(target))
     end
     
     return text, ids
@@ -501,6 +502,10 @@ end
 
 -- Check if goals of a specific contract are fulfilled and complete said contract if they are.
 checkGoals = function(contract)
+
+    -- Prevent re-completion.
+    if not Array(storage.activeContracts):contains(contract['contract id']) then return end
+
     local goals = contract['goals']
 
     -- 'Have buildings in city' goal type.
