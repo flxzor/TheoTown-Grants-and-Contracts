@@ -95,3 +95,7 @@ If you would like to help by translating strings, you can do so by copying the `
 ```
 Make sure to create a pull request once you're done. Direct commits might be rolled back.
 Thank you if you choose to contribute!
+
+## Credits & legal
+Plugin created by Kulche. Special thanks to JustAnyone and Lobby. Sound effects derived from Freesound content.
+Do not reupload files from this repository anywhere else, or claim them as your own.

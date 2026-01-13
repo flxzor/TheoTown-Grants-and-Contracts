@@ -258,6 +258,7 @@ local function createContractPreview(menu, contract_id, contract, almost_availab
                                         icon = Icon.OK,
                                         text = TheoTown.translate('$contracts_string_cancel_ok'),
                                         onClick = function()
+                                            TheoTown.playSound('$contracts_sound_cancel_00')
                                             City.spendMoney(contract['advance'] + contract['cancellation'])
                                             menu.close()
                                             table.remove(storage.activeContracts, Array(storage.activeContracts):find(contract_id))
