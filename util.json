@@ -1,12 +1,12 @@
 [
   {
-    "id": "$contracts_menu_script_00",
+    "id": "$contracts_script_00",
     "type": "script",
     "require privileges": true,
     "script": "#LuaWrapper",
     "meta": {
       "luawrapper": {
-        "script": "contracts_menu.lua",
+        "script": "main.lua",
         "dev": true
       }
     }
