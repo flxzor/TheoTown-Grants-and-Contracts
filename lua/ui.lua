@@ -1,9 +1,12 @@
 
+-- This module handles all things UI related. No significant logic happens here.
+
 local Manager = require('manager')
 local InfoText = require('infotext')
 
 local UI = {}
 
+-- Create the notification that pops up after a contract is completed.
 function UI.createCompletionDialog(state)
     local def = state.def
 
@@ -20,11 +23,12 @@ function UI.createCompletionDialog(state)
     }
 end
 
-function UI.createContractPreview(menu, def, state)
+-- Create the preview dialog for a select contract.
+function UI.createContractPreview(menu, def, state, status)
     local buttons = {}
 
     -- If possible, add accept button.
-    if not state and Manager.canAccept() then
+    if not state and not status and Manager.canAccept() then
         table.insert(
             buttons,
             {
@@ -40,8 +44,26 @@ function UI.createContractPreview(menu, def, state)
         )
     end
 
-    -- If possible, add cancel button.
+    -- Add control buttons for active contract.
     if state and state.status == 'active' then
+
+        -- Find building button.
+        local missing_id = Manager.getNextAction(state.def)
+        if missing_id then
+            table.insert(
+                buttons,
+                {
+                    icon = Icon.EYE,
+                    text = TheoTown.translate('$contracts_string_find'),
+                    onClick = function()
+                        menu.close()
+                        City.createDraftDrawer(missing_id).select()
+                    end
+                }
+            )
+        end
+
+        -- Cancel button.
         table.insert(
             buttons,
             {
@@ -105,8 +127,24 @@ function UI.createContractPreview(menu, def, state)
         warning:setColor(154, 0, 0)
         warning:setAlignment(0, 0.5)
     end
+
+    -- Add a warning if a contract is almost available.
+    if status then
+        local text
+
+        if status == 'no_rank' then text = TheoTown.translate('$contracts_string_rank_low') end
+        if status == 'no_contracts' then text = TheoTown.translate('$contracts_string_required_contracts_missing') end
+
+        local warning = preview.controls:addLabel{
+            text = text
+        }
+
+        warning:setColor(154, 0, 0)
+        warning:setAlignment(0, 0.5)
+    end
 end
 
+-- Add active contracts to the top of the list.
 function UI.addActiveContractRow(menu, parent, state)
     local entry = parent:addCanvas{
         h = 30
@@ -125,6 +163,7 @@ function UI.addActiveContractRow(menu, parent, state)
         onClick = function() UI.createContractPreview(menu, state.def, state) end
     }
 
+    -- Add a green 'active' label next to the contract.
     local active_label = entry:addLabel{
         text = TheoTown.translate('$contracts_string_active')
     }
@@ -134,6 +173,7 @@ function UI.addActiveContractRow(menu, parent, state)
     active_label:setColor(0, 154, 0)
 end
 
+-- Add available contracts to the middle of the list.
 function UI.addAvailableContractRow(menu, parent, def)
     local entry = parent:addCanvas{
         h = 30
@@ -152,6 +192,7 @@ function UI.addAvailableContractRow(menu, parent, def)
         onClick = function() UI.createContractPreview(menu, def) end
     }
 
+    -- Add a gray 'available' label next to the contract (unless max contract count has been reached).
     if Manager.canAccept() then
         local available_label = entry:addLabel{
             text = TheoTown.translate('$contracts_string_available')
@@ -165,6 +206,30 @@ function UI.addAvailableContractRow(menu, parent, def)
     end
 end
 
+-- Add almost available contracts to the bottom of the list.
+function UI.addAlmostAvailableContractRow(menu, parent, def, status)
+    local entry = parent:addCanvas{
+        h = 30
+    }
+
+    local label = entry:addLabel{
+        text = def.title,
+        width = -80,
+        x = 5
+    }
+
+    local button = entry:addButton{
+        x = -30,
+        width = 30,
+        icon = Icon.INFO,
+        onClick = function() UI.createContractPreview(menu, def, nil, status) end
+    }
+
+    -- Gray out the contract.
+    label:setColor(150, 150, 150)
+end
+
+-- Create the base contract browser dialog.
 function UI.createContractsMenu()
     local contractsMenu = GUI.createDialog{
         icon = Icon.SETTINGS,
@@ -180,13 +245,17 @@ function UI.createContractsMenu()
         height = -10
     }
 
-    -- List all available/active contracts.
+    -- List all active/available/almost available contracts.
     for _, state in pairs(Manager.getActive()) do
         UI.addActiveContractRow(contractsMenu, listbox, state)
     end
 
     for _, def in pairs(Manager.getAvailable()) do
         UI.addAvailableContractRow(contractsMenu, listbox, def)
+    end
+
+    for _, entry in pairs(Manager.getAlmostAvailable()) do
+        UI.addAlmostAvailableContractRow(contractsMenu, listbox, entry.def, entry.status)
     end
 
     -- Add an active contract counter.
@@ -201,6 +270,7 @@ function UI.createContractsMenu()
     end
 end
 
+-- Add the button to the sidebar.
 function UI.addSidebarButton()
     if not City.isReadonly() and not City.isSandbox() then
         local sidebar = GUI.get('sidebarLine')

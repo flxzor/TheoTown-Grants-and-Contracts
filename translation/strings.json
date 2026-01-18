@@ -14,6 +14,7 @@
       "$contracts_string_counter": "Active contracts: %i/%i, %i available",
       "$contracts_string_max_contract_count": "Can't have more than %i contracts active at the same time.",
       "$contracts_string_rank_low": "Expand your city to unlock this contract.",
+      "$contracts_string_required_contracts_missing": "Complete more contracts to unlock this contract.",
       "$contracts_string_no_money_title": "Insufficient money",
       "$contracts_string_no_money_text": "You're missing the required funds to repay the initial grant of %s and pay a cancellation fee of %s.",
       "$contracts_string_cancel_button": "Cancel contract",

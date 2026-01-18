@@ -1,5 +1,6 @@
 
-local Goals = require('goals')
+-- This module handles the generation of contract information strings for use in UI. Information contrains goals and rewards.
+
 local Definitions = require('definitions')
 
 local InfoText = {}
@@ -69,11 +70,12 @@ function InfoText.income(target)
     if current < target then text = text .. '[✗] '
     else text = text .. '[✓] ' end
 
-    text = text .. string.format(TheoTown.translate('$contracts_string_condition_income'), current, target)
+    text = text .. string.format(TheoTown.translate('$contracts_string_condition_income'), TheoTown.formatMoney(current), TheoTown.formatMoney(target))
 
     return text
 end
 
+-- Return a complete information string of a contract.
 function InfoText.get(def)
     local text = TheoTown.translate('$contracts_string_condition_title')
 

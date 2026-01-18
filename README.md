@@ -63,16 +63,20 @@ All goals listed in the `"goals"` object have to be fulfilled to complete the co
 ```json
 "goals": {
   "buildings": [
-    {"id": "$building_id_00", "count": 4} // At least "count" buildings of ID "id" have to be built. "count" is optional and 1 by default.
+    // At least "count" buildings of ID "id" have to be built. "count" is optional and 1 by default.
+    {"id": "$building_id_00", "count": 4}
   ],
   "roads": [
-    {"id": "$road_id", "count": 50} // Same as above, but for road type drafts.
+    // Same as above, but for road type drafts.
+    {"id": "$road_id", "count": 50}
   ],
   "population": [
-    {"count": 500, "level": 1} // At least "count" population of wealth level "level" must be present. "level" is optional, in that case "count" refers to the entire population of the city.
+    // At least "count" population of wealth level "level" must be present. "level" is optional, in that case "count" refers to the entire population of the city.
+    {"count": 500, "level": 1}
   ],
   "happiness": [
-    {"type": "park", "value": 0.6} // At least "value" happiness of type "type" must be achieved. "type" is not optional (for now).
+    // At least "value" happiness of type "type" must be achieved. "type" is optional.
+    {"type": "park", "value": 0.6}
   ],
   "income": 3000 // At least this much monthly income is necessary. Since multiple income goals would be pointless, this one is not an array.
 }
@@ -93,7 +97,7 @@ If you would like to help by translating strings, you can do so by copying the `
   }
 ]
 ```
-Make sure to create a pull request once you're done. Direct commits might be rolled back.
+Make sure to create a pull request once you're done.
 Thank you if you choose to contribute!
 
 ## Credits & legal

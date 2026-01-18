@@ -1,4 +1,6 @@
 
+-- This module handles data storage and serialization. Contract data should preferably persist between sessions.
+
 local Storage = {}
 
 -- Initialize an load stored data.

@@ -1,14 +1,18 @@
 
+-- This module handles contract goal logic like checks and listeners.
+
 local Definitions = require('definitions')
 
 local Goals = {}
 
 Goals.handlers = {}
 
+-- Handlers contain init and check behavior for every goal type.
 function Goals.registerHandler(type, handler)
     Goals.handlers[type] = handler
 end
 
+-- Check all goals of a contract.
 function Goals.checkAll(state)
     for goalType, goals in pairs(state.def.goals) do
         local handler = Goals.handlers[goalType]
@@ -19,6 +23,25 @@ function Goals.checkAll(state)
         end
     end
     return true
+end
+
+-- Return the ID of the first unmet actionable goal (building or road).
+function Goals.getNextAction(def)
+    if def.goals.buildings then
+        for _, goal in ipairs(def.goals.buildings) do
+            local draft = Draft.getDraft(goal.id)
+            if draft and City.countBuildings(draft) < goal.count then return goal.id end
+        end
+    end
+
+    if def.goals.roads then
+        for _, goal in ipairs(def.goals.roads) do
+            local draft = Draft.getDraft(goal.id)
+            if draft and City.countRoads(draft) < goal.count then return goal.id end
+        end
+    end
+
+    return nil
 end
 
 Goals.registerHandler(

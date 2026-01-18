@@ -1,4 +1,6 @@
 
+-- This is the core of the plugin that holds the other modules together.
+
 local Definitions = require('definitions')
 local Storage = require('storage')
 local Manager = require('manager')
@@ -23,6 +25,7 @@ function script:buildCityGUI()
     UI.addSidebarButton()
 end
 
+-- Perform daily checks for the contracts that require them.
 function script:nextDay()
     for _, state in pairs(storage.contracts.active) do
         if state.needsDailyCheck or state._dirty then

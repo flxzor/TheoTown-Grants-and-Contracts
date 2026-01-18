@@ -1,4 +1,6 @@
 
+-- This module handles contract definitions extracted from json data.
+
 local Definitions = {}
 
 local contract_definitions = {}
