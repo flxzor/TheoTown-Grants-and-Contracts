@@ -525,5 +525,54 @@
         ]
       }
     }
+  },
+  {
+    "id": "$contract_coastalretreat_00",
+    "type": "data",
+    "index": true,
+    "meta": {
+      "tags": {
+        "contract": {}
+      },
+      "contract id": "$contract_coastalretreat_00",
+      "title id": "$contract_coastalretreat_00_title",
+      "text id": "$contract_coastalretreat_00_text",
+      "advance": 2000,
+      "completion": 5000,
+      "cancellation": 200,
+      "requirements": {
+        "rank": 8,
+        "contracts completed": ["$contract_learningandleisure_00"]
+      },
+      "goals": {
+        "buildings": [
+          {"id": "$marina00"}
+        ]
+      }
+    }
+  },
+  {
+    "id": "$contract_monumenttopower_00",
+    "type": "data",
+    "index": true,
+    "meta": {
+      "tags": {
+        "contract": {}
+      },
+      "contract id": "$contract_monumenttopower_00",
+      "title id": "$contract_monumenttopower_00_title",
+      "text id": "$contract_monumenttopower_00_text",
+      "advance": 500,
+      "completion": 2000,
+      "cancellation": 100,
+      "requirements": {
+        "contracts completed": ["$contract_learningandleisure_00"]
+      },
+      "goals": {
+        "buildings": [
+          {"id": "$mayorvilla00"}
+        ]
+      }
+    }
   }
 ]

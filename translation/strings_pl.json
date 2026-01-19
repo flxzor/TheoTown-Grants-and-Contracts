@@ -74,11 +74,11 @@
       "$contract_thegreatsprawl_00_title": "The Great Sprawl",
       "$contract_thegreatsprawl_00_text": "Large, international companies and agencies only invest in major population centers. Grow your city into a metropolis to attract new partnerships and opportunities.",
       "$contract_finishingtouches_00_title": "Finishing Touches",
-      "$contract_finishingtouches_00_text": "A city isn't only about big infrastructure projects - it's also about the small details. Place a bunch of zone decorations around the city to make it feel more alive and welcoming."//,
-      //"$contract_coastalretreat_00_title": "Coastal Retreat",
-      //"$contract_coastalretreat_00_text": "text",
-      //"$contract_monumenttopower_00_title": "Monument to Power",
-      //"$contract_monumenttopower_00_text": "text"
+      "$contract_finishingtouches_00_text": "A city isn't only about big infrastructure projects - it's also about the small details. Place a bunch of zone decorations around the city to make it feel more alive and welcoming.",
+      "$contract_coastalretreat_00_title": "Coastal Retreat",
+      "$contract_coastalretreat_00_text": "The city's waterfront is currently severly underutilized by expensive boats. Give sailboat owners a proper place to enjoy the coastline and provide a fancy coastal retreat (for those who can afford it).",
+      "$contract_monumenttopower_00_title": "Monument to Power",
+      "$contract_monumenttopower_00_text": "For a city of this size, governing from an ordinary building is no longer appropriate. Construct a lavish mayor's villa to propely reflect the importance of their office. Every great city needs a reminder of who's in charge!"
     }
   }
 ]

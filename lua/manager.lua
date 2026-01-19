@@ -19,10 +19,6 @@ local SOUNDS = {
     CANCEL = '$contracts_sound_cancel_00'
 }
 
-function Manager.initCity()
-    storage = Storage.init()
-end
-
 -- Returns true if contract is currently active.
 function Manager.isActive(id)
     return storage.contracts.active[id] ~= nil
@@ -188,6 +184,32 @@ end
 function Manager._emit(list, state)
     for _, fn in ipairs(list) do
         fn(state)
+    end
+end
+
+-- Reinitialize listeners when loading a city.
+function Manager.reinitGoals(state)
+    for goalType, goals in pairs(state.def.goals) do
+        local handler = Goals.handlers[goalType]
+        if handler and handler.init then
+            handler.init(state, goals)
+        end
+    end
+end
+
+function Manager.initCity()
+    storage = Storage.init()
+
+    -- Reinitialize listeners when loading a city.
+    for _, state in pairs(storage.contracts.active) do
+        state.status = 'active'
+        state._dirty = nil -- reset transient flags
+        state.needsDailyCheck = state.needsDailyCheck or false
+
+        Manager.reinitGoals(state)
+
+        -- Check immediately in case goals were already met.
+        Manager.checkCompletion(state)
     end
 end
 
